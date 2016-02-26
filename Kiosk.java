@@ -1,5 +1,13 @@
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.MaskFormatter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -43,11 +51,14 @@ public class Kiosk extends javax.swing.JFrame {
         dropOffPanel = new javax.swing.JPanel();
         DropOffLabel = new javax.swing.JLabel();
         DropOffCheckbox = new javax.swing.JCheckBox();
-        RelationshipDropOff = new javax.swing.JTextField();
         InsuranceNumberDropOff = new javax.swing.JTextField();
-        DateDropOff = new javax.swing.JTextField();
         Back_DropOff = new javax.swing.JButton();
         Submit_DropOff = new javax.swing.JButton();
+        DateDropOff = new javax.swing.JFormattedTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         feedbackPanel2 = new javax.swing.JPanel();
         DropOffFeedBack_ThankYou = new javax.swing.JLabel();
         DropOffFeedBack_QueueLabel = new javax.swing.JLabel();
@@ -67,9 +78,12 @@ public class Kiosk extends javax.swing.JFrame {
         PickUpCheckbox = new javax.swing.JCheckBox();
         FirstNamePickUp = new javax.swing.JTextField();
         LastNamePickUp = new javax.swing.JTextField();
-        DatePickUp = new javax.swing.JTextField();
         Submit_PickUp = new javax.swing.JButton();
         Back_PickUp = new javax.swing.JButton();
+        DatePickUp = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         feedbackPanel = new javax.swing.JPanel();
         PickUpFeedBack_ThankYou = new javax.swing.JLabel();
         PickUpFeedBack_QueueLabel = new javax.swing.JLabel();
@@ -123,10 +137,11 @@ public class Kiosk extends javax.swing.JFrame {
             ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ButtonPanelLayout.createSequentialGroup()
                 .addGap(173, 173, 173)
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(DropOffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PickUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(QuestionsButton)))
+                    .addComponent(QuestionsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(9, 9, 9))
         );
 
         getContentPane().add(ButtonPanel, "card2");
@@ -136,23 +151,23 @@ public class Kiosk extends javax.swing.JFrame {
 
         dropOffPanel.setBackground(new java.awt.Color(255, 204, 204));
 
-        DropOffLabel.setFont(new java.awt.Font("Copperplate", 1, 48)); // NOI18N
+        DropOffLabel.setFont(new java.awt.Font("Copperplate", 1, 36)); // NOI18N
         DropOffLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        DropOffLabel.setText("Drop Off");
+        DropOffLabel.setText("Drop Off Information");
 
         DropOffCheckbox.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         DropOffCheckbox.setText("Returning Customer");
+        DropOffCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DropOffCheckboxActionPerformed(evt);
+            }
+        });
 
-        RelationshipDropOff.setText("Relationship to Patient");
-
-        InsuranceNumberDropOff.setText("Please Enter Insurance Card Number");
         InsuranceNumberDropOff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InsuranceNumberDropOffActionPerformed(evt);
             }
         });
-
-        DateDropOff.setText("Date of Birth");
 
         Back_DropOff.setBackground(new java.awt.Color(255, 255, 204));
         Back_DropOff.setFont(new java.awt.Font("Copperplate", 1, 24)); // NOI18N
@@ -172,6 +187,25 @@ public class Kiosk extends javax.swing.JFrame {
             }
         });
 
+        try {
+            DateDropOff.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        DateDropOff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DateDropOffActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Date of Birth:");
+
+        jLabel5.setText("Insurance Card Number:");
+
+        jLabel6.setText("Relationship to Patient:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Self", "Relative", "Friend", "Other" }));
+
         javax.swing.GroupLayout dropOffPanelLayout = new javax.swing.GroupLayout(dropOffPanel);
         dropOffPanel.setLayout(dropOffPanelLayout);
         dropOffPanelLayout.setHorizontalGroup(
@@ -179,42 +213,59 @@ public class Kiosk extends javax.swing.JFrame {
             .addGroup(dropOffPanelLayout.createSequentialGroup()
                 .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dropOffPanelLayout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(DateDropOff)
-                            .addComponent(InsuranceNumberDropOff, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                            .addComponent(DropOffCheckbox)
-                            .addComponent(RelationshipDropOff)))
-                    .addGroup(dropOffPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Back_DropOff, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(Back_DropOff, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dropOffPanelLayout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(DropOffCheckbox)
+                            .addGroup(dropOffPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(DateDropOff))
+                            .addGroup(dropOffPanelLayout.createSequentialGroup()
+                                .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(InsuranceNumberDropOff, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                                    .addGroup(dropOffPanelLayout.createSequentialGroup()
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dropOffPanelLayout.createSequentialGroup()
-                .addContainerGap(241, Short.MAX_VALUE)
+                .addContainerGap(207, Short.MAX_VALUE)
                 .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dropOffPanelLayout.createSequentialGroup()
-                        .addComponent(DropOffLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(224, 224, 224))
+                        .addComponent(DropOffLabel)
+                        .addGap(131, 131, 131))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dropOffPanelLayout.createSequentialGroup()
                         .addComponent(Submit_DropOff)
-                        .addGap(296, 296, 296))))
+                        .addGap(271, 271, 271))))
         );
         dropOffPanelLayout.setVerticalGroup(
             dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dropOffPanelLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(DropOffLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(41, 41, 41)
                 .addComponent(DropOffCheckbox)
+                .addGap(18, 18, 18)
+                .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(RelationshipDropOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(InsuranceNumberDropOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DateDropOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InsuranceNumberDropOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(13, 13, 13)
+                .addGroup(dropOffPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DateDropOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addComponent(Submit_DropOff)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(Back_DropOff, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -252,7 +303,7 @@ public class Kiosk extends javax.swing.JFrame {
                         .addGroup(feedbackPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(DropOffFeedBack_BackButton)
                             .addComponent(DropOffFeedBack_QueueLabel))
-                        .addGap(0, 107, Short.MAX_VALUE)))
+                        .addGap(0, 95, Short.MAX_VALUE)))
                 .addGap(169, 169, 169))
         );
         feedbackPanel2Layout.setVerticalGroup(
@@ -304,7 +355,7 @@ public class Kiosk extends javax.swing.JFrame {
         questionsPanelLayout.setHorizontalGroup(
             questionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, questionsPanelLayout.createSequentialGroup()
-                .addGap(0, 119, Short.MAX_VALUE)
+                .addGap(0, 104, Short.MAX_VALUE)
                 .addGroup(questionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Scroll_Questions, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(QuestionsLabel))
@@ -327,7 +378,7 @@ public class Kiosk extends javax.swing.JFrame {
                 .addComponent(Scroll_Questions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Technician_Questions, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(Back_Questions, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -365,7 +416,7 @@ public class Kiosk extends javax.swing.JFrame {
                         .addGroup(feedbackPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(QuestionsFeedBack_BackButton)
                             .addComponent(QuestionsFeedBack_QueueLabel))
-                        .addGap(0, 107, Short.MAX_VALUE)))
+                        .addGap(0, 95, Short.MAX_VALUE)))
                 .addGap(169, 169, 169))
         );
         feedbackPanel1Layout.setVerticalGroup(
@@ -400,7 +451,6 @@ public class Kiosk extends javax.swing.JFrame {
         });
 
         FirstNamePickUp.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        FirstNamePickUp.setText("First Name");
         FirstNamePickUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FirstNamePickUpActionPerformed(evt);
@@ -408,14 +458,11 @@ public class Kiosk extends javax.swing.JFrame {
         });
 
         LastNamePickUp.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        LastNamePickUp.setText("Last Name");
         LastNamePickUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LastNamePickUpActionPerformed(evt);
             }
         });
-
-        DatePickUp.setText("Date of Birth");
 
         Submit_PickUp.setBackground(new java.awt.Color(255, 255, 204));
         Submit_PickUp.setFont(new java.awt.Font("Copperplate", 1, 24)); // NOI18N
@@ -435,47 +482,77 @@ public class Kiosk extends javax.swing.JFrame {
             }
         });
 
+        try {
+            DatePickUp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        DatePickUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DatePickUpActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Date of Birth:");
+
+        jLabel2.setText("Last Name:");
+
+        jLabel3.setText("First Name:");
+
         javax.swing.GroupLayout pickUpPanelLayout = new javax.swing.GroupLayout(pickUpPanel);
         pickUpPanel.setLayout(pickUpPanelLayout);
         pickUpPanelLayout.setHorizontalGroup(
             pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pickUpPanelLayout.createSequentialGroup()
-                .addContainerGap(181, Short.MAX_VALUE)
-                .addComponent(PickUpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
             .addGroup(pickUpPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pickUpPanelLayout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addComponent(Back_PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(562, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pickUpPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DatePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LastNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FirstNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PickUpCheckbox)))
-                    .addGroup(pickUpPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Back_PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pickUpPanelLayout.createSequentialGroup()
-                        .addGap(273, 273, 273)
-                        .addComponent(Submit_PickUp)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pickUpPanelLayout.createSequentialGroup()
+                                .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(PickUpCheckbox)
+                                    .addGroup(pickUpPanelLayout.createSequentialGroup()
+                                        .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(FirstNamePickUp)
+                                            .addComponent(DatePickUp)
+                                            .addComponent(LastNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(PickUpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(72, 72, 72))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pickUpPanelLayout.createSequentialGroup()
+                                .addComponent(Submit_PickUp)
+                                .addGap(271, 271, 271))))))
         );
         pickUpPanelLayout.setVerticalGroup(
             pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pickUpPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(PickUpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(52, 52, 52)
                 .addComponent(PickUpCheckbox)
                 .addGap(18, 18, 18)
-                .addComponent(FirstNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FirstNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LastNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LastNamePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DatePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGroup(pickUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DatePickUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addComponent(Submit_PickUp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(Back_PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -513,7 +590,7 @@ public class Kiosk extends javax.swing.JFrame {
                         .addGroup(feedbackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(PickUpFeedBack_BackButton)
                             .addComponent(PickUpFeedBack_QueueLabel))
-                        .addGap(0, 107, Short.MAX_VALUE)))
+                        .addGap(0, 95, Short.MAX_VALUE)))
                 .addGap(169, 169, 169))
         );
         feedbackPanelLayout.setVerticalGroup(
@@ -542,30 +619,6 @@ public class Kiosk extends javax.swing.JFrame {
         card.show(DisplayPanel, "pickUp");
     }//GEN-LAST:event_PickUpButtonActionPerformed
 
-    private void PickUpCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUpCheckboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PickUpCheckboxActionPerformed
-
-    private void FirstNamePickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstNamePickUpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FirstNamePickUpActionPerformed
-
-    private void LastNamePickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LastNamePickUpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LastNamePickUpActionPerformed
-
-    private void Back_PickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_PickUpActionPerformed
-        DisplayPanel.setVisible(false);
-        ButtonPanel.setVisible(true);
-    }//GEN-LAST:event_Back_PickUpActionPerformed
-
-    private void Submit_PickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_PickUpActionPerformed
-        DisplayPanel.setVisible(true);
-        CardLayout card = (CardLayout)DisplayPanel.getLayout();
-        card.next(DisplayPanel);
-        //card.show(DisplayPanel, "feedBack");
-    }//GEN-LAST:event_Submit_PickUpActionPerformed
-
     private void Back_QuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_QuestionsActionPerformed
         DisplayPanel.setVisible(false);
         ButtonPanel.setVisible(true);
@@ -582,22 +635,6 @@ public class Kiosk extends javax.swing.JFrame {
         card.next(DisplayPanel);
         //card.show(DisplayPanel, "feedBack");
     }//GEN-LAST:event_Technician_QuestionsActionPerformed
-
-    private void InsuranceNumberDropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsuranceNumberDropOffActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_InsuranceNumberDropOffActionPerformed
-
-    private void Back_DropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_DropOffActionPerformed
-        DisplayPanel.setVisible(false);
-        ButtonPanel.setVisible(true);
-    }//GEN-LAST:event_Back_DropOffActionPerformed
-
-    private void Submit_DropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_DropOffActionPerformed
-        DisplayPanel.setVisible(true);
-        CardLayout card = (CardLayout)DisplayPanel.getLayout();
-        card.next(DisplayPanel);
-        //card.show(DisplayPanel, "feedBack");
-    }//GEN-LAST:event_Submit_DropOffActionPerformed
 
     private void DropOffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DropOffButtonActionPerformed
         ButtonPanel.setVisible(false);
@@ -623,6 +660,92 @@ public class Kiosk extends javax.swing.JFrame {
         ButtonPanel.setVisible(true);
     }//GEN-LAST:event_DropOffFeedBack_BackButtonActionPerformed
 
+    private void DatePickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatePickUpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DatePickUpActionPerformed
+
+    private void Back_PickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_PickUpActionPerformed
+        DisplayPanel.setVisible(false);
+        ButtonPanel.setVisible(true);
+    }//GEN-LAST:event_Back_PickUpActionPerformed
+
+    private void Submit_PickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_PickUpActionPerformed
+        DisplayPanel.setVisible(true);
+        CardLayout card = (CardLayout)DisplayPanel.getLayout();
+        card.next(DisplayPanel);
+        //card.show(DisplayPanel, "feedBack");
+    }//GEN-LAST:event_Submit_PickUpActionPerformed
+
+    private void LastNamePickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LastNamePickUpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LastNamePickUpActionPerformed
+
+    private void FirstNamePickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstNamePickUpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FirstNamePickUpActionPerformed
+
+    private void PickUpCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUpCheckboxActionPerformed
+        // TODO add your handling code here:
+        if (pickUpCheckboxBoolean) {
+            DatePickUp.setEditable(true);
+            DatePickUp.setBackground(Color.WHITE);
+            
+            pickUpCheckboxBoolean = false;
+        }
+        else {
+            DatePickUp.setEditable(false);
+            DatePickUp.setBackground(Color.LIGHT_GRAY);
+            
+            pickUpCheckboxBoolean = true;
+        }
+    }//GEN-LAST:event_PickUpCheckboxActionPerformed
+
+    private void DateDropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateDropOffActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DateDropOffActionPerformed
+
+    private void Submit_DropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_DropOffActionPerformed
+        DisplayPanel.setVisible(true);
+        CardLayout card = (CardLayout)DisplayPanel.getLayout();
+        card.next(DisplayPanel);
+        //card.show(DisplayPanel, "feedBack");
+    }//GEN-LAST:event_Submit_DropOffActionPerformed
+
+    private void Back_DropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_DropOffActionPerformed
+        DisplayPanel.setVisible(false);
+        ButtonPanel.setVisible(true);
+    }//GEN-LAST:event_Back_DropOffActionPerformed
+
+    private void InsuranceNumberDropOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsuranceNumberDropOffActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InsuranceNumberDropOffActionPerformed
+
+    private void DropOffCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DropOffCheckboxActionPerformed
+        // TODO add your handling code here:
+        if (dropOffCheckboxBoolean) {
+            DateDropOff.setEditable(true);
+            DateDropOff.setBackground(Color.WHITE);
+            InsuranceNumberDropOff.setEditable(true);
+            InsuranceNumberDropOff.setBackground(Color.WHITE);
+            
+            dropOffCheckboxBoolean = false;
+        }
+        else {
+            DateDropOff.setEditable(false);
+            DateDropOff.setBackground(Color.LIGHT_GRAY);
+            InsuranceNumberDropOff.setEditable(false);
+            InsuranceNumberDropOff.setBackground(Color.LIGHT_GRAY);
+            
+            dropOffCheckboxBoolean = true;
+        }
+    }//GEN-LAST:event_DropOffCheckboxActionPerformed
+    /*
+    jCalendarButton1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateOnlyPopupChanged(evt);
+            }
+        });
+*/
     /**
      * @param args the command line arguments
      */
@@ -658,14 +781,17 @@ public class Kiosk extends javax.swing.JFrame {
             }
         });
     }
-
+	
+    Boolean pickUpCheckboxBoolean = false;
+    Boolean dropOffCheckboxBoolean = false;
+	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back_DropOff;
     private javax.swing.JButton Back_PickUp;
     private javax.swing.JButton Back_Questions;
     private javax.swing.JPanel ButtonPanel;
-    private javax.swing.JTextField DateDropOff;
-    private javax.swing.JTextField DatePickUp;
+    private javax.swing.JFormattedTextField DateDropOff;
+    private javax.swing.JFormattedTextField DatePickUp;
     private javax.swing.JPanel DisplayPanel;
     private javax.swing.JButton DropOffButton;
     private javax.swing.JCheckBox DropOffCheckbox;
@@ -688,7 +814,6 @@ public class Kiosk extends javax.swing.JFrame {
     private javax.swing.JLabel QuestionsFeedBack_QueueLabel;
     private javax.swing.JLabel QuestionsFeedBack_ThankYou;
     private javax.swing.JLabel QuestionsLabel;
-    private javax.swing.JTextField RelationshipDropOff;
     private javax.swing.JScrollPane Scroll_Questions;
     private javax.swing.JButton Submit_DropOff;
     private javax.swing.JButton Submit_PickUp;
@@ -697,6 +822,13 @@ public class Kiosk extends javax.swing.JFrame {
     private javax.swing.JPanel feedbackPanel;
     private javax.swing.JPanel feedbackPanel1;
     private javax.swing.JPanel feedbackPanel2;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel pickUpPanel;
     private javax.swing.JPanel questionsPanel;
     // End of variables declaration//GEN-END:variables
