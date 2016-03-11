@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Main Menu</title>
+<link rel="stylesheet" type="text/css" href="menu1.css"/>
+<script>
+function PickUp() {
+	console.log("pick up");
+	removeBox();
+	document.title = "Pick Up";
+	var box = document.getElementById("box");
+	var form = document.createElement("form");
+	form.setAttribute('method',"post");
+	form.setAttribute('action',"submit.php");
+
+	// returning customer checkbox
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Returning Customer ";
+	
+	var checkbox = document.createElement("input");
+	checkbox.type = "checkbox";
+	checkbox.name = "returningcustomer";
+	label.appendChild(checkbox);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// first name field
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "First Name: ";
+	
+	var firstname = document.createElement("input");
+	firstname.type = "text";
+	firstname.name = "firstname";
+	label.appendChild(firstname);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// last name field
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Last Name: ";
+	
+	var lastname = document.createElement("input");
+	lastname.type = "text";
+	lastname.name = "lastname";
+	label.appendChild(lastname);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// date of birth field
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Date of Birth: ";
+	
+	var DOB = document.createElement("input");
+	DOB.type = "date";
+	DOB.name = "DOB";
+	label.appendChild(DOB);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// submit button
+	var tr = document.createElement("tr");
+	var submit = document.createElement("input");
+	submit.type = "submit";
+	submit.value = "Submit";
+	tr.appendChild(submit);
+	
+	form.appendChild(tr);
+	////
+	
+	// set submit type for server
+	var type = document.createElement("input");
+	type.type = "hidden";
+	type.name = "type";
+	type.value = "pickup";
+	
+	form.appendChild(type);
+	////
+	
+	box.appendChild(form);
+	
+	var back = document.createElement("button");
+	back.onclick = "goBack()";
+	back.innerHTML = "Back";
+	box.appendChild(back);
+}
+
+function DropOff() {
+	console.log("drop off");
+	removeBox();
+	document.title = "Drop Off";
+	var box = document.getElementById("box");
+	var form = document.createElement("form");
+	form.setAttribute('method',"post");
+	form.setAttribute('action',"submit.php");
+
+	// returning customer checkbox
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Returning Customer ";
+	
+	var checkbox = document.createElement("input");
+	checkbox.type = "checkbox";
+	checkbox.name = "returningcustomer";
+	label.appendChild(checkbox);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// relationship to patient field
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Relationship to Patient: ";
+	var select = document.createElement("select");
+	select.name = "relationship";
+	
+	var option = document.createElement("option");
+	option.value = "self";
+	option.innerHTML = "Self";
+	select.appendChild(option);
+	
+	var option = document.createElement("option");
+	option.value = "relative";
+	option.innerHTML = "Relative";
+	select.appendChild(option);
+	
+	var option = document.createElement("option");
+	option.value = "friend";
+	option.innerHTML = "Friend";
+	select.appendChild(option);
+	
+	var option = document.createElement("option");
+	option.value = "other";
+	option.innerHTML = "Other";
+	select.appendChild(option);
+	
+	label.appendChild(select);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// insurance card number field
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Insurance Card Number: ";
+	
+	var insurance = document.createElement("input");
+	insurance.type = "text";
+	insurance.name = "insurance";
+	label.appendChild(insurance);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// date of birth field
+	var tr = document.createElement("tr");
+	var label = document.createElement("label");
+	label.innerHTML = "Date of Birth: ";
+	
+	var DOB = document.createElement("input");
+	DOB.type = "date";
+	DOB.name = "DOB";
+	label.appendChild(DOB);
+	tr.appendChild(label);
+	
+	form.appendChild(tr);
+	////
+	
+	// submit button
+	var tr = document.createElement("tr");
+	var submit = document.createElement("input");
+	submit.type = "submit";
+	submit.value = "Submit";
+	tr.appendChild(submit);
+	
+	form.appendChild(tr);
+	////
+	
+	// set submit type for server
+	var type = document.createElement("input");
+	type.type = "hidden";
+	type.name = "type";
+	type.value = "dropoff";
+	
+	form.appendChild(type);
+	////
+	
+	box.appendChild(form);
+	
+	var back = document.createElement("button");
+	back.onclick = "goBack()";
+	back.innerHTML = "Back";
+	box.appendChild(back);
+}
+
+function Questions() {
+	console.log("questions");
+	//removeBox();
+}
+
+function removeBox() {
+	var box = document.getElementById("box");
+	while (box.firstChild) {
+		box.removeChild(box.firstChild);
+	}
+}
+
+function goBack() {
+    
+}
+</script>
+</head>
+<body>
+
+<table id="box" border="1">
+<tr>
+<td><input onclick="PickUp()" type="button" class="btn" value="Pick Up"></td>
+<td><input onclick="DropOff()" type="button" class="btn" value="Drop Off"></td>
+<td><input onclick="Questions()" type="button" class="btn" value="Questions"></td>
+</tr>
+</table>
+
+</body>
+</html>
