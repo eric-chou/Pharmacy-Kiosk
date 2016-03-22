@@ -1,26 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Select Your Favorite Queue</title>
+<title>Kiosk Queue</title>
+<script type="text/javascript" src="../php/tablednd.js"></script>
 <script type="text/javascript">
+	var theQueue = new Array(), queueCount = 0, t;
+	
+	function Start() {
+		refreshPage();
+	}
+	
+	/* // Drag and drop
+	function dragAndDropTableInit() {
+		var table = document.getElementById('theTable');
+		var tableDnD = new TableDnD();
+		tableDnD.init(table);
+	}
+	*/
+	
+	function wrap(top, selector, bottom) {
+		var matches = document.querySelectorAll(selector);
+		for (var i = 0; i < matches.length; i++){
+			var modified = top + matches[i].outerHTML + bottom;
+			matches[i].outerHTML = modified;
+			console.log(modified);
+		}
+	}
+	
+	function next() {
+        var httpRequest;
+ 
+        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+            httpRequest = new XMLHttpRequest();
+            if (httpRequest.overrideMimeType) {
+                httpRequest.overrideMimeType('text/xml');
+            }
+        }
+        else if (window.ActiveXObject) { // IE
+            try {
+                httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+            catch (e) {
+                try {
+                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch (e) {}
+            }
+        }
+        if (!httpRequest) {
+            alert('Cannot create an XMLHTTP instance');
+            return false;
+        }
+ 
+        var type = 2; 
+		var T = document.getElementById("theTable");
+		var id = T.rows[1].id;
+		console.log(id);
+		T.deleteRow(1);
+		
+        var data = 'type=' + type + '&id=' + id;
+
+        httpRequest.open('POST', 'back_end_php.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        httpRequest.onreadystatechange = function() {} ;
+        httpRequest.send(data);
+	}
+	
 	function updateRows(httpRequest) {
 		if (httpRequest.readyState == 4) {
 			if (httpRequest.status == 200) {
 				var data = httpRequest.responseText;
 				var newData = JSON.parse(data);
 				var rettype = newData.Type;
-				
+				//alert(newData.num);
+				//alert(newData.if);
 				if (rettype == "Update") {
+					queueCount = 0;
 					var newRows = newData.Contents;
 					for (var i = 0; i < newRows.length; i++) {
 						var theRow = newRows[i];
-						addRowToList(theRow.type, theRow.first_name, theRow.last_name, theRow.date_of_birth, theRow.relation, theRow.returning_customer, theRow.insurance_card_number);
+						addRowToList(theRow.id, theRow.type, theRow.first_name, theRow.last_name, theRow.date_of_birth, theRow.relation, theRow.returning_customer, theRow.insurance_card_number);
 					}
 					showQueueTable();
-					window.status="Table updated at " + (new Date()).toString();
-				}
-				else {
-					window.status="";
 				}
 			}
 			else {
@@ -29,7 +91,8 @@
 		}
 	}
 
-	function Queue(type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number) {
+	function Queue(id, type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number) {
+		this.id = id;
 		this.type = type;
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -39,8 +102,8 @@
 		this.insurance_card_number = insurance_card_number;
 	}
 
-	function addRowToList(type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number) {
-		var currItem = new Queue(type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number);
+	function addRowToList(id, type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number) {
+		var currItem = new Queue(id, type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number);
 		theQueue[queueCount] = currItem;
 		queueCount++;
 	}
@@ -88,16 +151,23 @@
 		tParent.replaceChild(newT, T);
 
 		for (var i = 0; i < queueCount; i++) {
-			addRow(theQueue[i].type, theQueue[i].first_name, theQueue[i].last_name, theQueue[i].date_of_birth, theQueue[i].relation, theQueue[i].returning_customer, theQueue[i].insurance_card_number);
+			addRow(theQueue[i].id, theQueue[i].type, theQueue[i].first_name, theQueue[i].last_name, theQueue[i].date_of_birth, theQueue[i].relation, theQueue[i].returning_customer, theQueue[i].insurance_card_number);
 		}
+		
+		/* // Drag and drop
+		hrow.setAttribute("NoDrag", "1");
+		hrow.setAttribute("NoDrop", "1");
+		dragAndDropTableInit();
+		*/
 	}
 
-	function addRow(type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number) {
+	function addRow(id, type, first_name, last_name, date_of_birth, relation, returning_customer, insurance_card_number) {
 		var T = document.getElementById("theTable");
 		var len = T.rows.length;
 		var R = T.insertRow(len); 
-		R.align = 'center';       
+		R.align = 'left';
 		R.className = 'regular';
+		R.id = id;
 
 		var C = R.insertCell(0);  
 		var txt = document.createTextNode(type);
@@ -153,31 +223,27 @@
             return false;
         }
  
-        var type = 3; 
+        var type = 1; 
         var rows = document.getElementById("theTable").rows.length-1;;
 
         if (rows == -1) {
 			rows = 0;
 		}
-        var data = 'rows=' + rows;
+        var data = 'type=' + type + '&rows=' + rows;
 
         httpRequest.open('POST', 'back_end_php.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         httpRequest.onreadystatechange = function() { updateRows(httpRequest); } ;
         httpRequest.send(data);
-        t = setTimeout("refreshPage()", 5000);
+        t = setTimeout("refreshPage()", 15000);
     }
 </script>
 </head>
-<body onload = "refreshPage()">
-<center>
-
+<body onload = "Start()">
 <table id = "theTable" border = "1" class="thetable">
 </table>
-
-<script type="text/javascript">
-	var theQueue = new Array(), queueCount = 0, t;
-</script>
+<br>
+<input type="button" onclick="next()" value="Next">
 </body>
 </html>
