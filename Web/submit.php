@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <title>Thank You!</title>
- </head>
- <body>
+<head>
+	<title>Thank You!</title>
+	<link rel="stylesheet" type="text/css" href="menu.css"/>
+</head>
+
+<body>
 <?php
 	$type = $_POST["type"];
 	
@@ -23,7 +25,7 @@
 		if ($db->connect_error):
 		   die ("Could not connect to db " . $db->connect_error);
 		endif;
-		$query = "INSERT INTO queue VALUES ('$type', '$firstname', '$lastname', '$DOB', '', '$returning', '')";
+		$query = "INSERT INTO queue VALUES (null, '$type', '$firstname', '$lastname', '$DOB', '', '$returning', '')";
 		$db->query($query);
 		
 		// return main page
@@ -45,7 +47,7 @@
 		if ($db->connect_error):
 		   die ("Could not connect to db " . $db->connect_error);
 		endif;
-		$query = "INSERT INTO queue VALUES ('$type', '', '', '$DOB', '$relationship', '$returning', $insurance_number)";
+		$query = "INSERT INTO queue VALUES (null, '$type', '', '', '$DOB', '$relationship', '$returning', $insurance_number)";
 		$db->query($query);
 		
 		// return main page
