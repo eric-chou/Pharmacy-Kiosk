@@ -1,33 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Drop Off</title>
-<link rel="stylesheet" type="text/css" href="menu1.css"/>
-<script>
-function goBack() {
-    window.history.back();
-}
-</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Drop Off</title>
+	<link rel="stylesheet" type="text/css" href="menu.css"/>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 </head>
+
 <body>
-
-<table id="box" border="1">
-<form method="post" action="submit.php">
-<tr><td><label>Returning Customer <input type="checkbox" name="returningcustomer"></label></td></tr>
-<tr><td>
-<label>Relationship to Patient: <select name="relationship">
-<option value="self">Self</option>
-<option value="relative">Relative</option>
-<option value="friend">Friend</option>
-<option value="other">Other</option>
-</select></label>
-</td></tr>
-<tr><td><label>Insurance Card Number: <input type="text" name="insurance"></label></td></tr>
-<tr><td><label>Date of Birth: <input type="date" name="DOB"></label></td></tr>
-<tr><td><input type="submit" value="Submit"> <button onclick="goBack()">Back</button></td></tr>
-<input type="hidden" name="type" value="dropoff">
-</form>
-</table>
-
+	<header>
+		<p><img src="pitt_logo.png" alt=""></p>
+	</header>
+	<div id="box">
+		<legend><b> DROP OFF FORM </b></legend>
+		<form class="pure-form pure-form-aligned" method="POST" action="submit.php">
+			<fieldset style="background-color: 	#e6dbbe; mid-height:100px; border-radius: 25px;">
+				<div class="pure-control-group" style="font-family: Palatino Linotype;">
+					<label for="cb" class="pure-checkbox" style="width:270px">
+						<input id="cb" type="checkbox" name="returningcustomer"> 
+						<span class="checkboxtext">
+							Returning Customer to this store
+						</span>
+					</label>
+					<br></br>
+					
+					<label for="relation">Relationship to Patient</label>
+					<select id="relation" class="pure-input-1-2" name="relationship">
+						<option>Self</option>
+						<option>Relative</option>
+						<option>Friend</option>
+						<option>Other</option>
+					</select>
+					<br></br>
+					
+					<label for="insurance">Insurance Card Number</label>
+					<input id="insurance" type="text" placeholder="Insurance Card" name="insurance" required>
+					<br></br>
+					
+					<label for="dob">Date of Birth</label>
+					<input id="dob" type="date" placeholder="DOB" name="DOB" required>
+					<br></br>
+				</div>
+				<div id="section">
+					<button type="submit" class="btnTypeTwo">SUBMIT</button>
+        			<button onclick="goBack()" class="btnTypeTwo">BACK</button>
+        			<input type="hidden" name="type" value="dropoff">
+        		</div>
+    		</fieldset>
+		</form>
+	</div>
 </body>
 </html>
